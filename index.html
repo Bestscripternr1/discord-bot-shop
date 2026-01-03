@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Discord Bots - 15€</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 100%;
+            padding: 40px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #5865F2;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .price-tag {
+            background: linear-gradient(135deg, #5865F2, #7289DA);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            display: inline-block;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .login-section {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .discord-login-btn {
+            background: #5865F2;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .discord-login-btn:hover {
+            background: #4752C4;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(88, 101, 242, 0.3);
+        }
+
+        .discord-icon {
+            width: 24px;
+            height: 24px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+
+        .user-details {
+            flex: 1;
+        }
+
+        .logout-btn {
+            background: #ed4245;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1em;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #5865F2;
+            box-shadow: 0 0 0 3px rgba(88, 101, 242, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border: 2px solid #e0e0e0;
+        }
+
+        input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .checkbox-group label {
+            margin: 0;
+            cursor: pointer;
+            font-weight: 400;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #5865F2, #7289DA);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(88, 101, 242, 0.3);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .submit-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .success-message {
+            display: none;
+            background: #4CAF50;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .required {
+            color: #e74c3c;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+
+        .info-box h3 {
+            color: #1976D2;
+            margin-bottom: 10px;
+        }
+
+        .info-box p {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤖 Custom Discord Bots</h1>
+            <p>Bestelle deinen individuellen Discord Bot</p>
+            <div class="price-tag">15€ pro Bot</div>
+        </div>
+
+        <!-- Login Section -->
+        <div id="loginSection" class="login-section">
+            <h2 style="margin-bottom: 20px; color: #333;">Melde dich an, um fortzufahren</h2>
+            <button class="discord-login-btn" onclick="loginWithDiscord()">
+                <svg class="discord-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028a14.09 14.09 0 0 0 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.956-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.946 2.418-2.157 2.418z"/>
+                </svg>
+                Mit Discord anmelden
+            </button>
+            <div class="info-box" style="margin-top: 30px; text-align: left;">
+                <h3>ℹ️ Info</h3>
+                <p>Dies ist eine Demo-Version. Der Discord-Login ist hier simuliert. Für eine echte Webseite benötigst du ein Backend mit Discord OAuth2.</p>
+            </div>
+        </div>
+
+        <!-- Order Form (hidden by default) -->
+        <div id="orderSection" class="hidden">
+            <div class="user-info">
+                <img id="userAvatar" class="user-avatar" src="" alt="Avatar">
+                <div class="user-details">
+                    <strong id="userName">Username</strong>
+                    <div style="color: #666; font-size: 0.9em;" id="userTag">#0000</div>
+                </div>
+                <button class="logout-btn" onclick="logout()">Abmelden</button>
+            </div>
+
+            <form id="botForm">
+                <div class="form-group">
+                    <label for="age">Alter <span class="required">*</span></label>
+                    <input type="number" id="age" name="age" placeholder="Dein Alter" min="13" max="99" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="botDescription">Was soll der Bot können? <span class="required">*</span></label>
+                    <textarea id="botDescription" name="botDescription" placeholder="Beschreibe die gewünschten Funktionen deines Bots..." required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="rulesAccept" name="rulesAccept" required>
+                        <label for="rulesAccept">
+                            Ich bestätige, dass der Bot nicht gegen die Discord-Nutzungsbedingungen verstößt <span class="required">*</span>
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">Jetzt bestellen - 15€</button>
+            </form>
+
+            <div class="success-message" id="successMessage">
+                ✅ Vielen Dank für deine Bestellung! Ich melde mich bald bei dir.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simulierter Discord Login (in echter App: Discord OAuth2)
+        function loginWithDiscord() {
+            // Demo-User Daten
+            const demoUser = {
+                id: '123456789',
+                username: 'DemoUser',
+                discriminator: '1234',
+                avatar: 'https://cdn.discordapp.com/embed/avatars/0.png'
+            };
+
+            // User Daten speichern
+            sessionStorage.setItem('discordUser', JSON.stringify(demoUser));
+            
+            // UI aktualisieren
+            showOrderForm(demoUser);
+        }
+
+        function showOrderForm(user) {
+            document.getElementById('loginSection').classList.add('hidden');
+            document.getElementById('orderSection').classList.remove('hidden');
+            
+            // User Info anzeigen
+            document.getElementById('userAvatar').src = user.avatar;
+            document.getElementById('userName').textContent = user.username;
+            document.getElementById('userTag').textContent = '#' + user.discriminator;
+        }
+
+        function logout() {
+            sessionStorage.removeItem('discordUser');
+            document.getElementById('loginSection').classList.remove('hidden');
+            document.getElementById('orderSection').classList.add('hidden');
+            document.getElementById('botForm').reset();
+        }
+
+        // Prüfen ob User bereits eingeloggt ist
+        window.addEventListener('load', function() {
+            const savedUser = sessionStorage.getItem('discordUser');
+            if (savedUser) {
+                showOrderForm(JSON.parse(savedUser));
+            }
+        });
+
+        // Form Submit Handler
+        document.getElementById('botForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const user = JSON.parse(sessionStorage.getItem('discordUser'));
+            const formData = {
+                discordUsername: user.username + '#' + user.discriminator,
+                discordId: user.id,
+                age: document.getElementById('age').value,
+                botDescription: document.getElementById('botDescription').value,
+                rulesAccepted: document.getElementById('rulesAccept').checked,
+                timestamp: new Date().toISOString()
+            };
+
+            console.log('Bestellung eingegangen:', formData);
+            
+            // Hier würdest du die Daten an dein Backend senden
+            // fetch('/api/orders', { method: 'POST', body: JSON.stringify(formData) })
+
+            document.getElementById('botForm').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'block';
+
+            setTimeout(() => {
+                document.getElementById('botForm').reset();
+                document.getElementById('botForm').style.display = 'block';
+                document.getElementById('successMessage').style.display = 'none';
+            }, 5000);
+        });
+    </script>
+</body>
+</html>
