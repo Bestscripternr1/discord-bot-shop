@@ -1,0 +1,18 @@
+{
+  "name": "discord-bot-shop",
+  "version": "1.0.0",
+  "main": "api/server.js",
+  "scripts": {
+    "start": "node api/server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "node-fetch": "^2.6.9",
+    "nodemailer": "^6.9.1",
+    "cors": "^2.8.5"
+  },
+  "engines": {
+    "node": "18.x"
+  }
+}
