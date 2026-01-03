@@ -96,7 +96,7 @@
             padding: 15px;
             background: #f8f9fa;
             border-radius: 10px;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
 
         .user-avatar {
@@ -109,6 +109,17 @@
             flex: 1;
         }
 
+        .user-name {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .user-tag {
+            color: #666;
+            font-size: 0.9em;
+        }
+
         .logout-btn {
             background: #ed4245;
             color: white;
@@ -118,6 +129,11 @@
             cursor: pointer;
             font-size: 0.9em;
             text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .logout-btn:hover {
+            background: #c53639;
         }
 
         .form-group {
@@ -132,7 +148,6 @@
             font-size: 0.95em;
         }
 
-        input[type="text"],
         input[type="number"],
         textarea {
             width: 100%;
@@ -144,7 +159,6 @@
             font-family: inherit;
         }
 
-        input[type="text"]:focus,
         input[type="number"]:focus,
         textarea:focus {
             outline: none;
@@ -213,10 +227,11 @@
             display: none;
             background: #4CAF50;
             color: white;
-            padding: 15px;
+            padding: 20px;
             border-radius: 10px;
             margin-top: 20px;
             text-align: center;
+            font-size: 1.1em;
         }
 
         .error-message {
@@ -272,6 +287,7 @@
 
         <div id="errorMessage" class="error-message"></div>
 
+        <!-- Login Section -->
         <div id="loginSection" class="login-section">
             <h2 style="margin-bottom: 20px; color: #333;">Melde dich mit Discord an</h2>
             <a href="/api/auth/login" class="discord-login-btn">
@@ -282,25 +298,32 @@
             </a>
         </div>
 
+        <!-- Order Form -->
         <div id="orderSection" class="hidden">
             <div class="user-info">
                 <img id="userAvatar" class="user-avatar" src="" alt="Avatar">
                 <div class="user-details">
-                    <strong id="userName">Username</strong>
-                    <div style="color: #666; font-size: 0.9em;" id="userTag">#0000</div>
+                    <div class="user-name" id="userName">Username</div>
+                    <div class="user-tag" id="userTag">#0000</div>
                 </div>
                 <a href="/api/auth/logout" class="logout-btn">Abmelden</a>
             </div>
 
             <form id="botForm">
                 <div class="form-group">
-                    <label for="age">Alter <span class="required">*</span></label>
-                    <input type="number" id="age" name="age" placeholder="Dein Alter" min="13" max="99" required>
+                    <label for="age">Dein Alter <span class="required">*</span></label>
+                    <input type="number" id="age" name="age" placeholder="z.B. 18" min="13" max="99" required>
                 </div>
 
                 <div class="form-group">
                     <label for="botDescription">Was soll der Bot können? <span class="required">*</span></label>
-                    <textarea id="botDescription" name="botDescription" placeholder="Beschreibe die gewünschten Funktionen deines Bots..." required></textarea>
+                    <textarea id="botDescription" name="botDescription" placeholder="Beschreibe die gewünschten Funktionen deines Bots...
+
+Zum Beispiel:
+- Moderations-Befehle
+- Musik abspielen
+- Levelsystem
+- etc." required></textarea>
                 </div>
 
                 <div class="form-group">
@@ -318,7 +341,8 @@
             </form>
 
             <div class="success-message" id="successMessage">
-                ✅ Vielen Dank für deine Bestellung! Ich melde mich bald bei dir.
+                ✅ Vielen Dank für deine Bestellung!<br>
+                Ich melde mich bald bei dir per Discord oder Email.
             </div>
         </div>
     </div>
@@ -370,7 +394,7 @@
             const originalText = submitBtn.innerHTML;
             
             submitBtn.disabled = true;
-            submitBtn.innerHTML = '<span class="loading"></span> Sende...';
+            submitBtn.innerHTML = '<span class="loading"></span> Sende Bestellung...';
 
             const formData = {
                 age: document.getElementById('age').value,
